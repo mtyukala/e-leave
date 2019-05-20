@@ -25,7 +25,7 @@ SECRET_KEY = 'oro#7m3viz^nw&%6d+)1i7j7r-udm#gcc35&t=x9!)nuplkl-h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 DOCKER = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'leavemanage',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
