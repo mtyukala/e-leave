@@ -12,3 +12,10 @@ services:
       - "8083:8083"
     depends_on:
       - db
+  migration:
+    image: postgres
+    command: python manage.py migrate --noinput
+    volumes:
+      - .:/e-leave
+    depends_on:
+      - db
