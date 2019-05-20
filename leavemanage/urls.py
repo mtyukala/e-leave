@@ -5,7 +5,8 @@ from leavemanage.views import LeaveViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'/leave', LeaveViewSet.as_view({
+
+router.register(r'^leave/', LeaveViewSet.as_view({
     'post': 'create',
     'put': 'put'
 }), base_name='leave')

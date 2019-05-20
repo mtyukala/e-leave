@@ -7,19 +7,22 @@ from django.utils.translation import ugettext as _
 STATUS = (('New', 'New'),
           ('Approved', 'Approved'),
           ('Declined', 'Declined'))
-EMP_NUMBER_VALIDATOR = RegexValidator('^[A-Z]{2},[0-9]{4}\z',
+EMP_NUMBER_VALIDATOR = RegexValidator(r'[A-Z]{2}[0-9]{4}',
                                       _('Employee number format needs to be AA0000'))
+
+TEL_NUMBER_VALIDATOR = RegexValidator(r'{\d{10}}', _(
+    'Phone number format needs to be #########'))
 
 
 class Employee(models.Model):
-    emp_number = models.CharField(required=True, max_length=6,
+    emp_number = models.CharField(blank=False, max_length=6,
                                   verbose_name=_("Employee Number"), validators=[EMP_NUMBER_VALIDATOR])
-    phone_number = models.CharField(required=True,
-                                    max_length=10, verbose_name=_("Phone Number"))
+    phone_number = models.CharField(blank=False,
+                                    max_length=10, verbose_name=_("Phone Number"), validators=[TEL_NUMBER_VALIDATOR])
     first_name = models.CharField(
-        required=True, max_length=25, verbose_name=_("First Name"))
+        blank=False, max_length=25, verbose_name=_("First Name"))
     last_name = models.CharField(
-        required=True, max_length=30, verbose_name=_("Last Name"))
+        blank=False, max_length=30, verbose_name=_("Last Name"))
 
     class Meta:
         verbose_name = 'Employee'

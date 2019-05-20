@@ -75,11 +75,13 @@ WSGI_APPLICATION = 'eleavepro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 if DOCKER:
+    PASSWORD = os.environ.get('POSTGRES_PASSWORD')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'postgres',
             'USER': 'postgres',
+            'PASSWORD': PASSWORD,
             'HOST': 'db',
             'PORT': 5432,
         }
@@ -130,3 +132,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
+    ('employee_1', 'employee_1@employee_1.com'),
+)
+ADMIN_USERNAME = 'employee_1'
+ADMIN_EMAIL = 'employee_1@eleave.com'
+# To be changed after first login by admin
+ADMIN_INITIAL_PASSWORD = 'employee_1'
