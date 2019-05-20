@@ -1,7 +1,7 @@
 FROM python:3
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /employee-leave
-WORKDIR /employee-leave
-COPY requirements.txt /employee-leave/
+RUN mkdir /e-leave
+WORKDIR /e-leave
+COPY requirements.txt /e-leave/
 RUN pip install -r requirements.txt
-COPY . /employee-leave/
+COPY . /e-leave/
