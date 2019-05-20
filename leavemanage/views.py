@@ -8,7 +8,9 @@ from rest_framework.response import Response
 
 class LeaveViewSet(viewsets.ModelViewSet):
     """
-    A simple viewset for posting a leave applicatons for employees
+    Leave create Api end point, clients need to submit `employee_pk`,
+    `start_date`, `end_date`, `days_of_leave`
+    and `status` (optional, defaults to New)
     """
     serializer_class = LeaveSerializer
 
@@ -21,5 +23,8 @@ class LeaveViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(self, request, pk=None):
-        pass
+    def put(self, request, *args, **kwargs):
+        """
+        Leave update API end point.
+        """
+        return self.update(request, *args, **kwargs)

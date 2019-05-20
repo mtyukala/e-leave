@@ -37,7 +37,7 @@ class Leave(models.Model):
                                       verbose_name=_("Start Date"), blank=False)
     end_date = models.DateTimeField(default=timezone.now,
                                     verbose_name=_("End Date"), blank=False)
-    days_of_leave = models.IntegerField()
+    days_of_leave = models.IntegerField(default=0)
     status = models.CharField(
         max_length=10, choices=STATUS, default=STATUS[1][1])
 
