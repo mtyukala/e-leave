@@ -10,8 +10,9 @@ STATUS = (('New', 'New'),
 EMP_NUMBER_VALIDATOR = RegexValidator(r'[A-Z]{2}[0-9]{4}',
                                       _('Employee number format needs to be AA0000'))
 
-TEL_NUMBER_VALIDATOR = RegexValidator(r'{\d{10}}', _(
+TEL_NUMBER_VALIDATOR = RegexValidator(r'[0-9]{10}', _(
     'Phone number format needs to be #########'))
+DATE_INPUT_FORMAT = ['%d-%m-%Y']
 
 
 class Employee(models.Model):
@@ -30,19 +31,22 @@ class Employee(models.Model):
         unique_together = ['last_name', 'first_name', 'emp_number']
 
     def __str__(self):
-        pass
+        return self.fullname()
+
+    def fullname(self):
+        return '{0}. {1} {2} ({3})'.format(self.id, self.first_name, self.last_name, self.emp_number)
 
 
 class Leave(models.Model):
 
     employee_pk = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    start_date = models.DateTimeField(default=timezone.now,
-                                      verbose_name=_("Start Date"), blank=False)
-    end_date = models.DateTimeField(default=timezone.now,
-                                    verbose_name=_("End Date"), blank=False)
+    start_date = models.DateField(default=timezone.now,
+                                  verbose_name=_("Start Date"), blank=False)
+    end_date = models.DateField(default=timezone.now,
+                                verbose_name=_("End Date"), blank=False)
     days_of_leave = models.IntegerField(default=0)
     status = models.CharField(
-        max_length=10, choices=STATUS, default=STATUS[1][1])
+        max_length=10, choices=STATUS, default=STATUS[0][0])
 
     class Meta:
         verbose_name = "Leave"
@@ -50,4 +54,4 @@ class Leave(models.Model):
         unique_together = ['start_date', 'end_date', 'employee_pk']
 
     def __str__(self):
-        pass
+        return 'From {0} to {1} ({2} days)'.format(self.start_date, self.end_date, self.days_of_leave)

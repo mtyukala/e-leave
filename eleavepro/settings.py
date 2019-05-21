@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leavemanage',
     'rest_framework',
+    'coreapi',
 ]
 
 MIDDLEWARE = [
@@ -113,7 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'django_reset_coreapi_schema.schema.CoreAPIAutoSchema',
+}
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
