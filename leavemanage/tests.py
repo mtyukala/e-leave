@@ -23,12 +23,18 @@ class LeaveViewTest(TestCase):
         Leave application for one employee cannot be added twice
         """
         employee = create_employee('TC2000', '0987654321', 'Jean', 'Sean')
+
         leave = {'employee_pk': employee.id, 'start_date': '2020-01-02',
                  'end_date': '2020-01-07', 'days_of_leave': 6, 'status': STATUS[1][1]}
         response = self.client.post(
             path=reverse('leavemanage:leave'), data=leave)
-        # self.assertEqual(Leave.objects.latest().start_date, '2020-01-02')
-        self.assertEqual(response.status_code, 201)
+
+        leave = {'employee_pk': employee.id, 'start_date': '2020-01-02',
+                 'end_date': '2020-01-07', 'days_of_leave': 6, 'status': STATUS[1][1]}
+        response = self.client.post(
+            path=reverse('leavemanage:leave'), data=leave)
+
+        self.assertEqual(response.status_code, 400)
 
     def test_create(self):
         """
@@ -38,10 +44,9 @@ class LeaveViewTest(TestCase):
 
         leave = {'employee_pk': employee.id, 'start_date': '2020-01-02',
                  'end_date': '2020-01-07', 'days_of_leave': 6, 'status': STATUS[1][1]}
-
         response = self.client.post(
             path=reverse('leavemanage:leave'), data=leave)
-        # print(response)
+
         self.assertEqual(response.status_code, 201)
 
     def test_start_date_in_past(self):
@@ -64,7 +69,7 @@ class LeaveViewTest(TestCase):
 
         leave = {'employee_pk': employee.id, 'start_date': '2019-06-02',
                  'end_date': '2019-01-01', 'days_of_leave': 6, 'status': STATUS[1][1]}
-
         response = self.client.post(
             path=reverse('leavemanage:leave'), data=leave)
+
         self.assertEqual(response.status_code, 400)

@@ -24,19 +24,19 @@ class LeaveViewSet(viewsets.ModelViewSet):
         serializer = LeaveSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)  # Trigger HTTP_400
-
+        id = request.data['employee_pk']
         start = request.data['start_date']
         end = request.data['end_date']
-        stop = start is None or end is None
-        if Leave.objects.filter(employee_pk__id=request.data['employee_pk'], start_date=start, end_date=end).exists():
-            print('error')  # errors = serializer.errors
+        stop = id is None or start is None or end is None
+        if stop or Leave.objects.filter(employee_pk__id=id, start_date=start, end_date=end).exists():
+            # errors = serializer.errors
             return Response({
                 'status': _('Bad request'),
                 'message': _('Duplicate leave application'),
             }, status=status.HTTP_400_BAD_REQUEST)
 
         instance = serializer.save(
-            employee_pk_id=request.data['employee_pk'])
+            employee_pk_id=id)
         headers = self.get_success_headers(serializer.data)
         serializer = LeaveSerializer(instance)
 
