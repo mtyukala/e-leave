@@ -11,6 +11,7 @@ from rest_framework.response import Response
 
 class LeaveViewSet(viewsets.ModelViewSet):
     """
+    create:
     Leave create Api end point, clients need to submit `employee_pk`,
     `start_date`, `end_date`, `days_of_leave`
     and `status` (optional, defaults to New). Acceptable date format is: YYY-MM-DD

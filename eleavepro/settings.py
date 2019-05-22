@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'django_reset_coreapi_schema.schema.CoreAPIAutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'django_rest_coreapi_schema.schema.CoreAPIAutoSchema',
 }
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
