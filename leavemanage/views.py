@@ -11,6 +11,7 @@ from rest_framework.response import Response
 
 class LeaveViewSet(viewsets.ModelViewSet):
     """
+    create:
     Leave create Api end point, clients need to submit `employee_pk`,
     `start_date`, `end_date`, `days_of_leave`
     and `status` (optional, defaults to New). Acceptable date format is: YYY-MM-DD
@@ -20,18 +21,22 @@ class LeaveViewSet(viewsets.ModelViewSet):
     querset = Leave.objects.all()
 
     def create(self, request, *args, **kwargs):
-        serializer = LeaveSerializer(data=request.data, many=True)
+        serializer = LeaveSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)  # Trigger HTTP_400
-        if Leave.objects.filter().exists:
-            errors = serializer.errors
+
+        start = request.data['start_date']
+        end = request.data['end_date']
+        stop = start is None or end is None
+        if Leave.objects.filter(employee_pk__id=request.data['employee_pk'], start_date=start, end_date=end).exists():
+            print('error')  # errors = serializer.errors
             return Response({
                 'status': _('Bad request'),
                 'message': _('Duplicate leave application'),
             }, status=status.HTTP_400_BAD_REQUEST)
 
         instance = serializer.save(
-            employee_pk_id=request.data.get['employee_pk'])
+            employee_pk_id=request.data['employee_pk'])
         headers = self.get_success_headers(serializer.data)
         serializer = LeaveSerializer(instance)
 

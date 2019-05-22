@@ -16,7 +16,7 @@ DATE_INPUT_FORMAT = ['%d-%m-%Y']
 
 
 class Employee(models.Model):
-    emp_number = models.CharField(blank=False, max_length=6,
+    emp_number = models.CharField(blank=False, max_length=6, unique=True,
                                   verbose_name=_("Employee Number"), validators=[EMP_NUMBER_VALIDATOR])
     phone_number = models.CharField(blank=False,
                                     max_length=10, verbose_name=_("Phone Number"), validators=[TEL_NUMBER_VALIDATOR])

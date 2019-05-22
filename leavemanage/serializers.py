@@ -1,5 +1,7 @@
 
 
+from datetime import datetime
+
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
@@ -15,7 +17,7 @@ class LeaveSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if 'start_date' in data and 'end_date' in data:
-            today = timezone.now
+            today = datetime.now().date()
             start = data['start_date']
             end = data['end_date']
 
