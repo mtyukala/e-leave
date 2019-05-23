@@ -5,3 +5,4 @@ coreapi
 django-rest-coreapi-schema
 pytest
 pytest-django
+gunicorn

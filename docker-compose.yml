@@ -5,17 +5,10 @@ services:
     image: postgres
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8083
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8083"
     volumes:
       - .:/e-leave
     ports:
       - "8083:8083"
-    depends_on:
-      - db
-  migration:
-    image: postgres
-    command: python manage.py migrate --noinput
-    volumes:
-      - .:/e-leave
     depends_on:
       - db
